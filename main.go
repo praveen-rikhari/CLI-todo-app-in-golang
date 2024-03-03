@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -18,8 +19,21 @@ func main() {
 		},
 	}
 
+	greetCmd := &cobra.Command{
+		Use:   "greet",
+		Short: "Greet someone",
+		Long:  "Greet someone by their name",
+		Args:  cobra.ExactArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Hello, %s!\n", args[0])
+		},
+	}
+
+	rootCmd.AddCommand(greetCmd)
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 }
